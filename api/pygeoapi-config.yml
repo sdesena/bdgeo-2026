@@ -235,10 +235,12 @@ resources:
         id_field: fid
         storage_crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
         properties:
-          - state
-          - image_date
-          - year
+          - estado
+          - data
+          - ano
           - area_ha
+          - cod_ibge
+          - municipio
   # ----------------------------------------------------------------------------
   # Coleção: CAR (Cadastro Ambiental Rural)
   # ----------------------------------------------------------------------------
