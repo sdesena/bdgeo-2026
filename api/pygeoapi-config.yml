@@ -1,0 +1,153 @@
+server:
+  bind:
+    host: 0.0.0.0
+    port: 5000
+  url: http://localhost:5000
+  language: pt-BR
+  cors: true # Cross-Origin Resource Sharing - permite que aplicações web rodando no navegador consumam dados geoespaciais hospedados em um domínio diferente
+  mimetype: application/json; charset=UTF-8
+  encoding: utf-8
+  gzip: false
+  map:
+    url: https://tile.openstreetmap.org/{z}/{x}/{y}.png
+    attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+  limits:
+    default_items: 50
+    max_items: 1000
+    max_distance_x: 25
+    max_distance_y: 25
+    max_distance_units: m
+    on_exceed: throttle   # 'throttle' desacelera/limita o processamento / 'error'
+
+
+logging:
+  level: INFO
+
+metadata:
+  identification:
+    title: Minha API OGC Features
+    description: Camadas disponibilizadas via OGC Features
+    keywords:
+      - Bancos de Dados Geográficos
+      - INPE
+      - Cadastro Ambiental Rural (CAR)
+      - Vale do Paraíba e Litoral Norte
+    keywords_type: theme
+    terms_of_service: https://creativecommons.org/licenses/by/4.0/
+    url: http://localhost:5000
+  license:
+    name: CC-BY 4.0 license
+    url: https://creativecommons.org/licenses/by/4.0/
+  provider:
+    name: Carla, Gustavo Piva Lopes Salgado e Mariana
+    url: http://localhost:5000
+  contact:
+    name: Carla, Gustavo Piva Lopes Salgado e Mariana
+    position: Desenvolvedores
+    address: Avenida dos Astronautas, 1758
+    city: São José dos Campos
+    stateorprovince: São Paulo
+    postalcode: 12227-010
+    country: Brasil
+    phone: (12) 3208-6000
+    fax: Não informado
+    email: gustavo.salgado@inpe.br
+    url: http://localhost:5000
+    hours: Mo-Fr 08:00-17:00
+    instructions: During hours of service
+    role: pointOfContact
+resources:
+  municipios_vpln:
+    type: collection
+    title: Municípios
+    description: Municípios do Vale do Paraíba e Litoral Norte
+    keywords:
+      - municipios
+      - IBGE
+      - 2025
+    links:
+      - type: text/html
+        rel: canonical
+        title: Página da coleção
+        href: http://localhost:5000/collections/municipios_vpln
+        hreflang: pt-BR
+    crs:
+      - http://www.opengis.net/def/crs/OGC/1.3/CRS84
+      - http://www.opengis.net/def/crs/EPSG/0/4674
+    extents:
+      spatial:
+        bbox: [-46.2634585999999999,-24.1132837000000002, -44.1613651999999988,-22.4038478999999988]
+        crs: http://www.opengis.net/def/crs/EPSG/0/4674
+    providers:
+      - type: feature
+        name: OGR
+        data:
+          source_type: GPKG
+          source: C:/Users/gus_h/Downloads/VP-LN/municipios-vale-paraiba-litoral-norte.gpkg
+        layer: br_municipios_2025
+        crs:
+          - http://www.opengis.net/def/crs/OGC/1.3/CRS84
+          - http://www.opengis.net/def/crs/EPSG/0/4674
+        storage_crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+        id_field: fid
+        properties:
+         - CD_MUN
+         - NM_MUN
+         - CD_RGI
+         - NM_RGI
+         - CD_RGINT
+         - NM_RGINT
+         - CD_UF
+         - NM_UF
+         - SIGLA_UF
+         - CD_REGIAO
+         - NM_REGIAO
+         - SIGLA_RG
+         - CD_CONCURB
+         - NM_CONCURB
+         - AREA_KM2
+  hidrografia:
+    type: collection
+    title: Hidrografia
+    description: Hidrografia do Vale do Paraíba e Litoral Norte
+    keywords:
+      - Hidrografia
+      - INPE
+      - BiomasBR
+    links:
+      - type: text/html
+        rel: canonical
+        title: Página da coleção
+        href: http://localhost:5000/collections/hidrografia
+        hreflang: pt-BR
+    extents:
+      spatial:
+        bbox: [-46.0501963999998978,-23.8107617248298986,-44.6799110936296984,-22.5177266713805011]
+        crs: http://www.opengis.net/def/crs/EPSG/0/4674
+    providers:
+      - type: feature
+        name: OGR
+        data:
+          source_type: GPKG
+          source: C:/Users/gus_h/Downloads/VP-LN/hydrography_biome_mata_atlantica_v20260806.gpkg
+        layer: recortado
+        crs:
+          - http://www.opengis.net/def/crs/OGC/1.3/CRS84
+          - http://www.opengis.net/def/crs/EPSG/0/4674
+        id_field: fid
+        storage_crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+        properties:
+          - state
+          - path_row
+          - main_class
+          - class_name
+          - def_cloud
+          - julian_day
+          - image_date
+          - year
+          - area_km
+          - scene_id
+          - source
+          - satellite
+          - sensor
+          - uuid
