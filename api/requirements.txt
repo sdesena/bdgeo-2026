@@ -1,0 +1,2 @@
+pygeoapi==0.24.0
+gunicorn

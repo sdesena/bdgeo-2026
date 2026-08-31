@@ -1,0 +1,10 @@
+.git
+.gitignore
+pygeoapi.log
+subir_pygeoapi.bat
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.vscode
+.idea
