@@ -110,7 +110,7 @@ components:
       name: resourceId
       required: true
       schema:
-        default: municipios
+        default: municipios_vpln
         type: string
     skipGeometry:
       description: This option can be used to skip response geometries for each feature.
@@ -214,26 +214,25 @@ components:
       type: object
 info:
   contact:
-    name: Minha API OGC Features
+    name: Carla, Gustavo e Mariana
     url: http://localhost:5000
     x-ogc-serviceContact:
       addresses:
       - administrativeArea: Brasil
-        city: "S\xE3o Jos\xE9 dos Campos"
+        city: "N\xE3o informado"
         deliveryPoint:
-        - Av dos Astronautas, 1.758
+        - "N\xE3o informado"
       contactInstructions: During hours of service
       emails:
-      - value: gustavo.salgado@inpe.br
+      - value: seuemail@example.com
       hoursOfService: pointOfContact
       links:
       - href: http://localhost:5000
         type: text/html
-      name: "Carla Aparecida de Almeida Paula, Gustavo Piva Lopes Salgado e Mariana\
-        \ Guimar\xE3es Montoro Morais"
+      name: Carla, Gustavo e Mariana
       phones:
       - type: main
-        value: (12) 3208-6000
+        value: "N\xE3o informado"
       - type: fax
         value: "N\xE3o informado"
       position: Desenvolvedores
@@ -245,15 +244,11 @@ info:
   title: Minha API OGC Features
   version: 0.24.0
   x-keywords:
-  - "Munic\xEDpios"
-  - Hidrografia
-  - Desmatamento
-  - "Uni\xE3o Europeia"
-  - CAR
+  - municipios
+  - hidrografia
   - IBGE
   - INPE
-  - MMA
-  - "Vale do Para\xEDba e Litoral Norte"
+  - "Vale do Para\xEDba"
 openapi: 3.0.2
 paths:
   /:
@@ -290,598 +285,6 @@ paths:
       summary: Collections
       tags:
       - server
-  /collections/car:
-    get:
-      description: "Im\xF3veis do Cadastro Ambiental Rural (CAR) do Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: describeCarCollection
-      parameters:
-      - $ref: '#/components/parameters/f'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Collection
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get car metadata
-      tags:
-      - car
-  /collections/car/items:
-    get:
-      description: "Im\xF3veis do Cadastro Ambiental Rural (CAR) do Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: getCarFeatures
-      parameters:
-      - description: The optional f parameter indicates the output format which the
-          server shall provide as part of the response document.  The default format
-          is GeoJSON.
-        explode: false
-        in: query
-        name: f
-        required: false
-        schema:
-          default: json
-          enum:
-          - json
-          - html
-          - jsonld
-          - csv
-          type: string
-        style: form
-      - $ref: '#/components/parameters/lang'
-      - $ref: '#/components/parameters/bbox'
-      - description: The optional limit parameter limits the number of items that
-          are presented in the response document (maximum=1000, default=50).
-        explode: false
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 50
-          maximum: 1000
-          minimum: 1
-          type: integer
-        style: form
-      - $ref: '#/components/parameters/crs'
-      - $ref: '#/components/parameters/bbox-crs'
-      - &id001
-        description: The properties that should be included. The parameter value is
-          a comma-separated list of property names.
-        explode: false
-        in: query
-        name: properties
-        required: false
-        schema:
-          items:
-            enum:
-            - cod_imovel
-            - status_imovel
-            - dat_criacao
-            - area
-            - condicao
-            - uf
-            - municipio
-            - cod_municipio_ibge
-            - m_fiscal
-            - tipo_imovel
-            type: string
-          type: array
-        style: form
-      - $ref: '#/components/parameters/vendorSpecificParameters'
-      - $ref: '#/components/parameters/skipGeometry'
-      - $ref: https://raw.githubusercontent.com/opengeospatial/ogcapi-records/master/core/openapi/parameters/sortby.yaml
-      - $ref: '#/components/parameters/offset'
-      - explode: false
-        in: query
-        name: cod_imovel
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: status_imovel
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: dat_criacao
-        required: false
-        schema:
-          format: date-time
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: area
-        required: false
-        schema:
-          type: number
-        style: form
-      - explode: false
-        in: query
-        name: condicao
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: uf
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: municipio
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: cod_municipio_ibge
-        required: false
-        schema:
-          type: integer
-        style: form
-      - explode: false
-        in: query
-        name: m_fiscal
-        required: false
-        schema:
-          type: number
-        style: form
-      - explode: false
-        in: query
-        name: tipo_imovel
-        required: false
-        schema:
-          type: string
-        style: form
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Features
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get car items
-      tags:
-      - car
-    options:
-      description: "Im\xF3veis do Cadastro Ambiental Rural (CAR) do Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: optionsCarFeatures
-      responses:
-        '200':
-          description: options response
-      summary: Options for car items
-      tags:
-      - car
-    post:
-      description: "Im\xF3veis do Cadastro Ambiental Rural (CAR) do Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: getCQL2CarFeatures
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: https://schemas.opengis.net/cql2/1.0/cql2.json
-        description: Get items with CQL2
-        required: true
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Features
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get car items with CQL2
-      tags:
-      - car
-  /collections/car/items/{featureId}:
-    get:
-      description: "Im\xF3veis do Cadastro Ambiental Rural (CAR) do Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: getCarFeature
-      parameters:
-      - $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
-      - $ref: '#/components/parameters/crs'
-      - $ref: '#/components/parameters/f'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Feature
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get car item by id
-      tags:
-      - car
-    options:
-      description: "Im\xF3veis do Cadastro Ambiental Rural (CAR) do Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: optionsCarFeature
-      parameters:
-      - $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
-      responses:
-        '200':
-          description: options response
-      summary: Options for car item by id
-      tags:
-      - car
-  /collections/car/queryables:
-    get:
-      description: "Im\xF3veis do Cadastro Ambiental Rural (CAR) do Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: getCarQueryables
-      parameters:
-      - *id001
-      - $ref: '#/components/parameters/f'
-      - &id003
-        description: The profile to be applied to a given request
-        explode: false
-        in: query
-        name: profile
-        required: false
-        schema:
-          enum:
-          - actual-domain
-          - valid-domain
-          type: string
-        style: form
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: '#/components/responses/Queryables'
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get car queryables
-      tags:
-      - car
-  /collections/car/schema:
-    get:
-      description: "Im\xF3veis do Cadastro Ambiental Rural (CAR) do Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: getCarSchema
-      parameters:
-      - $ref: '#/components/parameters/f'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: '#/components/responses/Queryables'
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get car schema
-      tags:
-      - car
-  /collections/desmatamento:
-    get:
-      description: "Desmatamento anual entre os anos de 2021 e 2025 no Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: describeDesmatamentoCollection
-      parameters:
-      - $ref: '#/components/parameters/f'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Collection
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get desmatamento metadata
-      tags:
-      - desmatamento
-  /collections/desmatamento/items:
-    get:
-      description: "Desmatamento anual entre os anos de 2021 e 2025 no Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: getDesmatamentoFeatures
-      parameters:
-      - description: The optional f parameter indicates the output format which the
-          server shall provide as part of the response document.  The default format
-          is GeoJSON.
-        explode: false
-        in: query
-        name: f
-        required: false
-        schema:
-          default: json
-          enum:
-          - json
-          - html
-          - jsonld
-          - csv
-          type: string
-        style: form
-      - $ref: '#/components/parameters/lang'
-      - $ref: '#/components/parameters/bbox'
-      - description: The optional limit parameter limits the number of items that
-          are presented in the response document (maximum=1000, default=50).
-        explode: false
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 50
-          maximum: 1000
-          minimum: 1
-          type: integer
-        style: form
-      - $ref: '#/components/parameters/crs'
-      - $ref: '#/components/parameters/bbox-crs'
-      - &id002
-        description: The properties that should be included. The parameter value is
-          a comma-separated list of property names.
-        explode: false
-        in: query
-        name: properties
-        required: false
-        schema:
-          items:
-            enum:
-            - state
-            - path_row
-            - main_class
-            - class_name
-            - def_cloud
-            - julian_day
-            - image_date
-            - year
-            - area_km
-            - scene_id
-            - source
-            - satellite
-            - sensor
-            - uuid
-            type: string
-          type: array
-        style: form
-      - $ref: '#/components/parameters/vendorSpecificParameters'
-      - $ref: '#/components/parameters/skipGeometry'
-      - $ref: https://raw.githubusercontent.com/opengeospatial/ogcapi-records/master/core/openapi/parameters/sortby.yaml
-      - $ref: '#/components/parameters/offset'
-      - explode: false
-        in: query
-        name: state
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: path_row
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: main_class
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: class_name
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: def_cloud
-        required: false
-        schema:
-          type: number
-        style: form
-      - explode: false
-        in: query
-        name: julian_day
-        required: false
-        schema:
-          type: integer
-        style: form
-      - explode: false
-        in: query
-        name: image_date
-        required: false
-        schema:
-          type: date
-        style: form
-      - explode: false
-        in: query
-        name: year
-        required: false
-        schema:
-          type: integer
-        style: form
-      - explode: false
-        in: query
-        name: area_km
-        required: false
-        schema:
-          type: number
-        style: form
-      - explode: false
-        in: query
-        name: scene_id
-        required: false
-        schema:
-          type: integer
-        style: form
-      - explode: false
-        in: query
-        name: source
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: satellite
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: sensor
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: uuid
-        required: false
-        schema:
-          type: string
-        style: form
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Features
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get desmatamento items
-      tags:
-      - desmatamento
-    options:
-      description: "Desmatamento anual entre os anos de 2021 e 2025 no Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: optionsDesmatamentoFeatures
-      responses:
-        '200':
-          description: options response
-      summary: Options for desmatamento items
-      tags:
-      - desmatamento
-    post:
-      description: "Desmatamento anual entre os anos de 2021 e 2025 no Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: getCQL2DesmatamentoFeatures
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: https://schemas.opengis.net/cql2/1.0/cql2.json
-        description: Get items with CQL2
-        required: true
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Features
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get desmatamento items with CQL2
-      tags:
-      - desmatamento
-  /collections/desmatamento/items/{featureId}:
-    get:
-      description: "Desmatamento anual entre os anos de 2021 e 2025 no Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: getDesmatamentoFeature
-      parameters:
-      - $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
-      - $ref: '#/components/parameters/crs'
-      - $ref: '#/components/parameters/f'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Feature
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get desmatamento item by id
-      tags:
-      - desmatamento
-    options:
-      description: "Desmatamento anual entre os anos de 2021 e 2025 no Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: optionsDesmatamentoFeature
-      parameters:
-      - $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
-      responses:
-        '200':
-          description: options response
-      summary: Options for desmatamento item by id
-      tags:
-      - desmatamento
-  /collections/desmatamento/queryables:
-    get:
-      description: "Desmatamento anual entre os anos de 2021 e 2025 no Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: getDesmatamentoQueryables
-      parameters:
-      - *id002
-      - $ref: '#/components/parameters/f'
-      - *id003
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: '#/components/responses/Queryables'
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get desmatamento queryables
-      tags:
-      - desmatamento
-  /collections/desmatamento/schema:
-    get:
-      description: "Desmatamento anual entre os anos de 2021 e 2025 no Vale do Para\xED\
-        ba e Litoral Norte"
-      operationId: getDesmatamentoSchema
-      parameters:
-      - $ref: '#/components/parameters/f'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: '#/components/responses/Queryables'
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get desmatamento schema
-      tags:
-      - desmatamento
   /collections/hidrografia:
     get:
       description: "Hidrografia do Vale do Para\xEDba e Litoral Norte"
@@ -898,7 +301,7 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get hidrografia metadata
+      summary: Get Hidrografia metadata
       tags:
       - hidrografia
   /collections/hidrografia/items:
@@ -925,20 +328,20 @@ paths:
       - $ref: '#/components/parameters/lang'
       - $ref: '#/components/parameters/bbox'
       - description: The optional limit parameter limits the number of items that
-          are presented in the response document (maximum=1000, default=50).
+          are presented in the response document (maximum=500, default=20).
         explode: false
         in: query
         name: limit
         required: false
         schema:
-          default: 50
-          maximum: 1000
+          default: 20
+          maximum: 500
           minimum: 1
           type: integer
         style: form
       - $ref: '#/components/parameters/crs'
       - $ref: '#/components/parameters/bbox-crs'
-      - &id004
+      - &id001
         description: The properties that should be included. The parameter value is
           a comma-separated list of property names.
         explode: false
@@ -1076,7 +479,7 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get hidrografia items
+      summary: Get Hidrografia items
       tags:
       - hidrografia
     options:
@@ -1085,7 +488,7 @@ paths:
       responses:
         '200':
           description: options response
-      summary: Options for hidrografia items
+      summary: Options for Hidrografia items
       tags:
       - hidrografia
     post:
@@ -1105,7 +508,7 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get hidrografia items with CQL2
+      summary: Get Hidrografia items with CQL2
       tags:
       - hidrografia
   /collections/hidrografia/items/{featureId}:
@@ -1126,7 +529,7 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get hidrografia item by id
+      summary: Get Hidrografia item by id
       tags:
       - hidrografia
     options:
@@ -1137,7 +540,7 @@ paths:
       responses:
         '200':
           description: options response
-      summary: Options for hidrografia item by id
+      summary: Options for Hidrografia item by id
       tags:
       - hidrografia
   /collections/hidrografia/queryables:
@@ -1145,9 +548,20 @@ paths:
       description: "Hidrografia do Vale do Para\xEDba e Litoral Norte"
       operationId: getHidrografiaQueryables
       parameters:
-      - *id004
+      - *id001
       - $ref: '#/components/parameters/f'
-      - *id003
+      - &id003
+        description: The profile to be applied to a given request
+        explode: false
+        in: query
+        name: profile
+        required: false
+        schema:
+          enum:
+          - actual-domain
+          - valid-domain
+          type: string
+        style: form
       - $ref: '#/components/parameters/lang'
       responses:
         '200':
@@ -1158,7 +572,7 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get hidrografia queryables
+      summary: Get Hidrografia queryables
       tags:
       - hidrografia
   /collections/hidrografia/schema:
@@ -1177,15 +591,13 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get hidrografia schema
+      summary: Get Hidrografia schema
       tags:
       - hidrografia
-  /collections/marco_ue:
+  /collections/municipios_vpln:
     get:
-      description: "M\xE1scara de desmatamento do Vale do Para\xEDba e Litoral Norte\
-        \ em 31 de dezembro de 2020, para o Marco de comercializa\xE7\xE3o com a Uni\xE3\
-        o Europeia"
-      operationId: describeMarco_ueCollection
+      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
+      operationId: describeMunicipios_vplnCollection
       parameters:
       - $ref: '#/components/parameters/f'
       - $ref: '#/components/parameters/lang'
@@ -1198,15 +610,13 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get marco_ue metadata
+      summary: "Get Munic\xEDpios metadata"
       tags:
-      - marco_ue
-  /collections/marco_ue/items:
+      - municipios_vpln
+  /collections/municipios_vpln/items:
     get:
-      description: "M\xE1scara de desmatamento do Vale do Para\xEDba e Litoral Norte\
-        \ em 31 de dezembro de 2020, para o Marco de comercializa\xE7\xE3o com a Uni\xE3\
-        o Europeia"
-      operationId: getMarco_ueFeatures
+      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
+      operationId: getMunicipios_vplnFeatures
       parameters:
       - description: The optional f parameter indicates the output format which the
           server shall provide as part of the response document.  The default format
@@ -1227,20 +637,20 @@ paths:
       - $ref: '#/components/parameters/lang'
       - $ref: '#/components/parameters/bbox'
       - description: The optional limit parameter limits the number of items that
-          are presented in the response document (maximum=1000, default=50).
+          are presented in the response document (maximum=500, default=20).
         explode: false
         in: query
         name: limit
         required: false
         schema:
-          default: 50
-          maximum: 1000
+          default: 20
+          maximum: 500
           minimum: 1
           type: integer
         style: form
       - $ref: '#/components/parameters/crs'
       - $ref: '#/components/parameters/bbox-crs'
-      - &id005
+      - &id002
         description: The properties that should be included. The parameter value is
           a comma-separated list of property names.
         explode: false
@@ -1250,10 +660,21 @@ paths:
         schema:
           items:
             enum:
-            - state
-            - image_date
-            - year
-            - area_ha
+            - CD_MUN
+            - NM_MUN
+            - CD_RGI
+            - NM_RGI
+            - CD_RGINT
+            - NM_RGINT
+            - CD_UF
+            - NM_UF
+            - SIGLA_UF
+            - CD_REGIAO
+            - NM_REGIAO
+            - SIGLA_RG
+            - CD_CONCURB
+            - NM_CONCURB
+            - AREA_KM2
             type: string
           type: array
         style: form
@@ -1263,28 +684,105 @@ paths:
       - $ref: '#/components/parameters/offset'
       - explode: false
         in: query
-        name: state
+        name: CD_MUN
         required: false
         schema:
           type: string
         style: form
       - explode: false
         in: query
-        name: image_date
+        name: NM_MUN
         required: false
         schema:
-          type: date
+          type: string
         style: form
       - explode: false
         in: query
-        name: year
+        name: CD_RGI
         required: false
         schema:
-          type: integer
+          type: string
         style: form
       - explode: false
         in: query
-        name: area_ha
+        name: NM_RGI
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: CD_RGINT
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: NM_RGINT
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: CD_UF
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: NM_UF
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: SIGLA_UF
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: CD_REGIAO
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: NM_REGIAO
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: SIGLA_RG
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: CD_CONCURB
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: NM_CONCURB
+        required: false
+        schema:
+          type: string
+        style: form
+      - explode: false
+        in: query
+        name: AREA_KM2
         required: false
         schema:
           type: number
@@ -1298,25 +796,21 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get marco_ue items
+      summary: "Get Munic\xEDpios items"
       tags:
-      - marco_ue
+      - municipios_vpln
     options:
-      description: "M\xE1scara de desmatamento do Vale do Para\xEDba e Litoral Norte\
-        \ em 31 de dezembro de 2020, para o Marco de comercializa\xE7\xE3o com a Uni\xE3\
-        o Europeia"
-      operationId: optionsMarco_ueFeatures
+      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
+      operationId: optionsMunicipios_vplnFeatures
       responses:
         '200':
           description: options response
-      summary: Options for marco_ue items
+      summary: "Options for Munic\xEDpios items"
       tags:
-      - marco_ue
+      - municipios_vpln
     post:
-      description: "M\xE1scara de desmatamento do Vale do Para\xEDba e Litoral Norte\
-        \ em 31 de dezembro de 2020, para o Marco de comercializa\xE7\xE3o com a Uni\xE3\
-        o Europeia"
-      operationId: getCQL2Marco_ueFeatures
+      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
+      operationId: getCQL2Municipios_vplnFeatures
       requestBody:
         content:
           application/json:
@@ -1331,15 +825,13 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get marco_ue items with CQL2
+      summary: "Get Munic\xEDpios items with CQL2"
       tags:
-      - marco_ue
-  /collections/marco_ue/items/{featureId}:
+      - municipios_vpln
+  /collections/municipios_vpln/items/{featureId}:
     get:
-      description: "M\xE1scara de desmatamento do Vale do Para\xEDba e Litoral Norte\
-        \ em 31 de dezembro de 2020, para o Marco de comercializa\xE7\xE3o com a Uni\xE3\
-        o Europeia"
-      operationId: getMarco_ueFeature
+      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
+      operationId: getMunicipios_vplnFeature
       parameters:
       - $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
       - $ref: '#/components/parameters/crs'
@@ -1354,30 +846,26 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get marco_ue item by id
+      summary: "Get Munic\xEDpios item by id"
       tags:
-      - marco_ue
+      - municipios_vpln
     options:
-      description: "M\xE1scara de desmatamento do Vale do Para\xEDba e Litoral Norte\
-        \ em 31 de dezembro de 2020, para o Marco de comercializa\xE7\xE3o com a Uni\xE3\
-        o Europeia"
-      operationId: optionsMarco_ueFeature
+      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
+      operationId: optionsMunicipios_vplnFeature
       parameters:
       - $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
       responses:
         '200':
           description: options response
-      summary: Options for marco_ue item by id
+      summary: "Options for Munic\xEDpios item by id"
       tags:
-      - marco_ue
-  /collections/marco_ue/queryables:
+      - municipios_vpln
+  /collections/municipios_vpln/queryables:
     get:
-      description: "M\xE1scara de desmatamento do Vale do Para\xEDba e Litoral Norte\
-        \ em 31 de dezembro de 2020, para o Marco de comercializa\xE7\xE3o com a Uni\xE3\
-        o Europeia"
-      operationId: getMarco_ueQueryables
+      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
+      operationId: getMunicipios_vplnQueryables
       parameters:
-      - *id005
+      - *id002
       - $ref: '#/components/parameters/f'
       - *id003
       - $ref: '#/components/parameters/lang'
@@ -1390,15 +878,13 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get marco_ue queryables
+      summary: "Get Munic\xEDpios queryables"
       tags:
-      - marco_ue
-  /collections/marco_ue/schema:
+      - municipios_vpln
+  /collections/municipios_vpln/schema:
     get:
-      description: "M\xE1scara de desmatamento do Vale do Para\xEDba e Litoral Norte\
-        \ em 31 de dezembro de 2020, para o Marco de comercializa\xE7\xE3o com a Uni\xE3\
-        o Europeia"
-      operationId: getMarco_ueSchema
+      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
+      operationId: getMunicipios_vplnSchema
       parameters:
       - $ref: '#/components/parameters/f'
       - $ref: '#/components/parameters/lang'
@@ -1411,315 +897,9 @@ paths:
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
         '500':
           $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get marco_ue schema
+      summary: "Get Munic\xEDpios schema"
       tags:
-      - marco_ue
-  /collections/municipios:
-    get:
-      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
-      operationId: describeMunicipiosCollection
-      parameters:
-      - $ref: '#/components/parameters/f'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Collection
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get municipios metadata
-      tags:
-      - municipios
-  /collections/municipios/items:
-    get:
-      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
-      operationId: getMunicipiosFeatures
-      parameters:
-      - description: The optional f parameter indicates the output format which the
-          server shall provide as part of the response document.  The default format
-          is GeoJSON.
-        explode: false
-        in: query
-        name: f
-        required: false
-        schema:
-          default: json
-          enum:
-          - json
-          - html
-          - jsonld
-          - csv
-          type: string
-        style: form
-      - $ref: '#/components/parameters/lang'
-      - $ref: '#/components/parameters/bbox'
-      - description: The optional limit parameter limits the number of items that
-          are presented in the response document (maximum=1000, default=50).
-        explode: false
-        in: query
-        name: limit
-        required: false
-        schema:
-          default: 50
-          maximum: 1000
-          minimum: 1
-          type: integer
-        style: form
-      - $ref: '#/components/parameters/crs'
-      - $ref: '#/components/parameters/bbox-crs'
-      - &id006
-        description: The properties that should be included. The parameter value is
-          a comma-separated list of property names.
-        explode: false
-        in: query
-        name: properties
-        required: false
-        schema:
-          items:
-            enum:
-            - cd_mun
-            - nm_mun
-            - cd_rgi
-            - nm_rgi
-            - cd_rgint
-            - nm_rgint
-            - cd_uf
-            - nm_uf
-            - sigla_uf
-            - cd_regiao
-            - nm_regiao
-            - sigla_rg
-            - cd_concurb
-            - nm_concurb
-            - area_km2
-            type: string
-          type: array
-        style: form
-      - $ref: '#/components/parameters/vendorSpecificParameters'
-      - $ref: '#/components/parameters/skipGeometry'
-      - $ref: https://raw.githubusercontent.com/opengeospatial/ogcapi-records/master/core/openapi/parameters/sortby.yaml
-      - $ref: '#/components/parameters/offset'
-      - explode: false
-        in: query
-        name: cd_mun
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: nm_mun
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: cd_rgi
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: nm_rgi
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: cd_rgint
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: nm_rgint
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: cd_uf
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: nm_uf
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: sigla_uf
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: cd_regiao
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: nm_regiao
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: sigla_rg
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: cd_concurb
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: nm_concurb
-        required: false
-        schema:
-          type: string
-        style: form
-      - explode: false
-        in: query
-        name: area_km2
-        required: false
-        schema:
-          type: number
-        style: form
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Features
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get municipios items
-      tags:
-      - municipios
-    options:
-      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
-      operationId: optionsMunicipiosFeatures
-      responses:
-        '200':
-          description: options response
-      summary: Options for municipios items
-      tags:
-      - municipios
-    post:
-      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
-      operationId: getCQL2MunicipiosFeatures
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: https://schemas.opengis.net/cql2/1.0/cql2.json
-        description: Get items with CQL2
-        required: true
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Features
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get municipios items with CQL2
-      tags:
-      - municipios
-  /collections/municipios/items/{featureId}:
-    get:
-      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
-      operationId: getMunicipiosFeature
-      parameters:
-      - $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
-      - $ref: '#/components/parameters/crs'
-      - $ref: '#/components/parameters/f'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/Feature
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get municipios item by id
-      tags:
-      - municipios
-    options:
-      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
-      operationId: optionsMunicipiosFeature
-      parameters:
-      - $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/parameters/featureId
-      responses:
-        '200':
-          description: options response
-      summary: Options for municipios item by id
-      tags:
-      - municipios
-  /collections/municipios/queryables:
-    get:
-      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
-      operationId: getMunicipiosQueryables
-      parameters:
-      - *id006
-      - $ref: '#/components/parameters/f'
-      - *id003
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: '#/components/responses/Queryables'
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get municipios queryables
-      tags:
-      - municipios
-  /collections/municipios/schema:
-    get:
-      description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
-      operationId: getMunicipiosSchema
-      parameters:
-      - $ref: '#/components/parameters/f'
-      - $ref: '#/components/parameters/lang'
-      responses:
-        '200':
-          $ref: '#/components/responses/Queryables'
-        '400':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/InvalidParameter
-        '404':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/NotFound
-        '500':
-          $ref: https://schemas.opengis.net\ogcapi/features/part1/1.0/openapi/ogcapi-features-1.yaml#/components/responses/ServerError
-      summary: Get municipios schema
-      tags:
-      - municipios
+      - municipios_vpln
   /conformance:
     get:
       description: API conformance definition
@@ -1776,19 +956,9 @@ tags:
     url: http://localhost:5000
   name: server
 - description: "Munic\xEDpios do Vale do Para\xEDba e Litoral Norte"
-  name: municipios
+  name: municipios_vpln
 - description: "Hidrografia do Vale do Para\xEDba e Litoral Norte"
   name: hidrografia
-- description: "M\xE1scara de desmatamento do Vale do Para\xEDba e Litoral Norte em\
-    \ 31 de dezembro de 2020, para o Marco de comercializa\xE7\xE3o com a Uni\xE3\
-    o Europeia"
-  name: marco_ue
-- description: "Im\xF3veis do Cadastro Ambiental Rural (CAR) do Vale do Para\xEDba\
-    \ e Litoral Norte"
-  name: car
-- description: "Desmatamento anual entre os anos de 2021 e 2025 no Vale do Para\xED\
-    ba e Litoral Norte"
-  name: desmatamento
 - name: coverages
 - name: edr
 - name: records

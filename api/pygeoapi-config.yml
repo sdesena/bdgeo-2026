@@ -1,83 +1,50 @@
-# ==============================================================================
-# CONFIGURAÇÃO GERAL DO SERVIDOR PYGEOAPI
-# ==============================================================================
 server:
-  # Endereço IP e porta onde o serviço escutará internamente no container
   bind:
     host: 0.0.0.0
     port: 5000
-    
-  # URL pública oficial onde a API está publicada
-  url: https://bdgeo-2026.onrender.com/
-  
-  # Idioma padrão da interface e respostas da API
+  url: http://localhost:5000
   language: pt-BR
-  # Idiomas suportados (evita avisos de 'unknown locale' nos logs)
-  locales:
-    - pt-BR
-    
-  # Formato de resposta padrão (GeoJSON / JSON) e codificação dos dados
+  cors: true # Cross-Origin Resource Sharing - permite que aplicações web rodando no navegador consumam dados geoespaciais hospedados em um domínio diferente
   mimetype: application/json; charset=UTF-8
   encoding: utf-8
   gzip: false
-  
-  # Provedor do mapa base exibido na interface Web da API
   map:
     url: https://tile.openstreetmap.org/{z}/{x}/{y}.png
     attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-    
-  # Formatação legível (com indentação) nas respostas JSON
-  pretty_print: true
-  
   limits:
-    default_items: 10       # Número padrão de registros por requisição
-    max_items: 100          # Número máximo permitido de registros por requisição
-    max_distance_x: 25      # Limite de busca no eixo X
-    max_distance_y: 25      # Limite de busca no eixo Y
-    max_distance_units: m   # Unidade de medida do limite espacial (metros)
-    on_exceed: throttle     # throttle trunca os registros ao limite em vez de retornar erro
+    default_items: 50
+    max_items: 1000
+    max_distance_x: 25
+    max_distance_y: 25
+    max_distance_units: m
+    on_exceed: throttle   # 'throttle' desacelera/limita o processamento / 'error'
 
-# Nível de detalhamento dos logs de execução (INFO, DEBUG, WARNING, ERROR)
+
 logging:
   level: INFO
 
-# ==============================================================================
-# METADADOS GERAIS E INFORMAÇÕES DE CONTATO DA API
-# ==============================================================================
 metadata:
-  # Identificação do serviço e palavras-chave de busca
   identification:
     title: Minha API OGC Features
     description: Camadas disponibilizadas via OGC Features
     keywords:
-      - Municípios
-      - Hidrografia
-      - Desmatamento
-      - União Europeia
-      - CAR
-      - IBGE
+      - Bancos de Dados Geográficos
       - INPE
-      - MMA
+      - Cadastro Ambiental Rural (CAR)
       - Vale do Paraíba e Litoral Norte
     keywords_type: theme
     terms_of_service: https://creativecommons.org/licenses/by/4.0/
-    url: https://github.com/gustavo-salgado-geo/bdgeo-2026
-  
-  # Termos de licença de uso dos dados
+    url: http://localhost:5000
   license:
     name: CC-BY 4.0 license
     url: https://creativecommons.org/licenses/by/4.0/
-    
-  # Entidade provedora do serviço
   provider:
-    name: Instituto Nacional de Pesquisas Espaciais (INPE)
-    url: https://bdgeo-2026.onrender.com/
-  
-  # Informações completas dos desenvolvedores/responsáveis pelo serviço
+    name: Carla, Gustavo Piva Lopes Salgado e Mariana
+    url: http://localhost:5000
   contact:
-    name: Carla Aparecida de Almeida Paula, Gustavo Piva Lopes Salgado e Mariana Guimarães Montoro Morais
+    name: Carla, Gustavo Piva Lopes Salgado e Mariana
     position: Desenvolvedores
-    address: Av dos Astronautas, 1.758
+    address: Avenida dos Astronautas, 1758
     city: São José dos Campos
     stateorprovince: São Paulo
     postalcode: 12227-010
@@ -85,90 +52,73 @@ metadata:
     phone: (12) 3208-6000
     fax: Não informado
     email: gustavo.salgado@inpe.br
-    url: https://github.com/gustavo-salgado-geo/bdgeo-2026
+    url: http://localhost:5000
     hours: Mo-Fr 08:00-17:00
     instructions: During hours of service
     role: pointOfContact
-    
-# ==============================================================================
-# RECURSOS (RESOURCES): COLEÇÕES DE DADOS VETORIAIS E PROCESSOS
-# ==============================================================================
 resources:
-  
-  # ----------------------------------------------------------------------------
-  # Coleção: Municípios
-  # ----------------------------------------------------------------------------
-  municipios:
-    type: collection # Define a entidade como conjunto de dados geográficos
-    title: municipios
+  municipios_vpln:
+    type: collection
+    title: Municípios
     description: Municípios do Vale do Paraíba e Litoral Norte
     keywords:
-      - Municípios
-      - Vale do Paraíba
-      - Litoral Norte
+      - municipios
       - IBGE
       - 2025
-    # Link de acesso direto à coleção na API
     links:
       - type: text/html
         rel: canonical
         title: Página da coleção
-        href: https://bdgeo-2026.onrender.com/collections/municipios
+        href: http://localhost:5000/collections/municipios_vpln
         hreflang: pt-BR
-    # Sistemas de Referência de Coordenadas suportados para reprojeção dinâmica
     crs:
       - http://www.opengis.net/def/crs/OGC/1.3/CRS84
       - http://www.opengis.net/def/crs/EPSG/0/4674
-    # Limites geográficos da coleção (Bounding Box: [Xmin, Ymin, Xmax, Ymax])
     extents:
       spatial:
         bbox: [-46.2634585999999999,-24.1132837000000002, -44.1613651999999988,-22.4038478999999988]
         crs: http://www.opengis.net/def/crs/EPSG/0/4674
-    # Configuração de leitura dos dados via driver GDAL/OGR
     providers:
       - type: feature
-        name: OGR # Motor de conexão vetorial OGR
+        name: OGR
         data:
-          source_type: SQLite      # Formato do arquivo físico contendo as tabelas
-          source: /app/bdgeo26.db  # Caminho absoluto do banco dentro da imagem Docker
-        layer: municipios          # Nome da tabela dentro do banco SQLite
+          source_type: GPKG
+          source: C:/Users/gus_h/Downloads/VP-LN/municipios-vale-paraiba-litoral-norte.gpkg
+        layer: br_municipios_2025
         crs:
           - http://www.opengis.net/def/crs/OGC/1.3/CRS84
           - http://www.opengis.net/def/crs/EPSG/0/4674
-        storage_crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84  # Sistema de coordenadas original armazenado
-        id_field: fid # Coluna da Chave Primária utilizada para busca por ID
-        # Lista dos atributos da tabela expostos no JSON final
+        storage_crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+        id_field: fid
         properties:
-          - cd_mun
-          - nm_mun
-          - cd_rgi
-          - nm_rgi
-          - cd_rgint
-          - nm_rgint
-          - cd_uf
-          - nm_uf
-          - sigla_uf
-          - cd_regiao
-          - nm_regiao
-          - sigla_rg
-          - cd_concurb
-          - nm_concurb
-          - area_km2
-  # ----------------------------------------------------------------------------
-  # Coleção: Hidrografia
-  # ----------------------------------------------------------------------------
+         - CD_MUN
+         - NM_MUN
+         - CD_RGI
+         - NM_RGI
+         - CD_RGINT
+         - NM_RGINT
+         - CD_UF
+         - NM_UF
+         - SIGLA_UF
+         - CD_REGIAO
+         - NM_REGIAO
+         - SIGLA_RG
+         - CD_CONCURB
+         - NM_CONCURB
+         - AREA_KM2
   hidrografia:
     type: collection
-    title: hidrografia
+    title: Hidrografia
     description: Hidrografia do Vale do Paraíba e Litoral Norte
     keywords:
       - Hidrografia
       - INPE
+      - BiomasBR
     links:
       - type: text/html
         rel: canonical
         title: Página da coleção
-        href: https://bdgeo-2026.onrender.com/collections/hidrografia
+        href: http://localhost:5000/collections/hidrografia
         hreflang: pt-BR
     extents:
       spatial:
@@ -178,9 +128,9 @@ resources:
       - type: feature
         name: OGR
         data:
-          source_type: SQLite
-          source: /app/bdgeo26.db
-        layer: hidrografia
+          source_type: GPKG
+          source: C:/Users/gus_h/Downloads/VP-LN/hydrography_biome_mata_atlantica_v20260806.gpkg
+        layer: recortado
         crs:
           - http://www.opengis.net/def/crs/OGC/1.3/CRS84
           - http://www.opengis.net/def/crs/EPSG/0/4674
@@ -201,142 +151,3 @@ resources:
           - satellite
           - sensor
           - uuid
-  # ----------------------------------------------------------------------------
-  # Coleção: Marco UE (Máscara de Desmatamento acumulado para acordo com a União Europeia)
-  # ----------------------------------------------------------------------------
-  marco_ue:
-    type: collection
-    title: marco_ue
-    description: Máscara de desmatamento do Vale do Paraíba e Litoral Norte em 31 de dezembro de 2020, para o Marco de comercialização com a União Europeia
-    keywords:
-      - Máscara de desmatamento acumulado
-      - União Europeia
-      - INPE
-    links:
-      - type: text/html
-        rel: canonical
-        title: Página da coleção
-        href: https://bdgeo-2026.onrender.com/collections/marco_ue
-        hreflang: pt-BR
-    extents:
-      spatial:
-        bbox: [-46.2632707709263684,-23.9401428987217919, -44.1636067314987670,-22.4171385391059523]
-        crs: http://www.opengis.net/def/crs/EPSG/0/4674
-    providers:
-      - type: feature
-        name: OGR
-        data:
-          source_type: SQLite
-          source: /app/bdgeo26.db
-        layer: marco_ue
-        crs:
-          - http://www.opengis.net/def/crs/OGC/1.3/CRS84
-          - http://www.opengis.net/def/crs/EPSG/0/4674
-        id_field: fid
-        storage_crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
-        properties:
-          - estado
-          - data
-          - ano
-          - area_ha
-          - cod_ibge
-          - municipio
-  # ----------------------------------------------------------------------------
-  # Coleção: CAR (Cadastro Ambiental Rural)
-  # ----------------------------------------------------------------------------
-  car:
-    type: collection
-    title: car
-    description: Imóveis do Cadastro Ambiental Rural (CAR) do Vale do Paraíba e Litoral Norte
-    keywords:
-      - Cadastro Ambiental Rural (CAR)
-      - MMA
-    links:
-      - type: text/html
-        rel: canonical
-        title: Página da coleção
-        href: https://bdgeo-2026.onrender.com/collections/car
-        hreflang: pt-BR
-    extents:
-      spatial:
-        bbox: [-46.2545710799999981,-23.9388327700000012, -44.1662388199999967,-22.4077264099999987]
-        crs: http://www.opengis.net/def/crs/EPSG/0/4674
-    providers:
-      - type: feature
-        name: OGR
-        data:
-          source_type: SQLite
-          source: /app/bdgeo26.db
-        layer: car
-        crs:
-          - http://www.opengis.net/def/crs/OGC/1.3/CRS84
-          - http://www.opengis.net/def/crs/EPSG/0/4674
-        id_field: fid
-        storage_crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
-        properties:
-          - cod_imovel
-          - status_imovel
-          - dat_criacao
-          - area
-          - condicao
-          - uf
-          - municipio
-          - cod_municipio_ibge
-          - m_fiscal
-          - tipo_imovel
-  # ----------------------------------------------------------------------------
-  # Coleção: Desmatamento
-  # ----------------------------------------------------------------------------
-  desmatamento:
-    type: collection
-    title: desmatamento
-    description: Desmatamento anual entre os anos de 2021 e 2025 no Vale do Paraíba e Litoral Norte
-    keywords:
-      - Desmatamento
-      - PRODES Mata Atlântica
-      - BiomasBR
-      - INPE
-    links:
-      - type: text/html
-        rel: canonical
-        title: Página da coleção
-        href: https://bdgeo-2026.onrender.com/collections/desmatamento
-        hreflang: pt-BR
-    extents:
-      spatial:
-        bbox: [-46.2365584846506295,-23.8649347221242571, -44.2148974803852184,-22.4688603503187707]
-        crs: http://www.opengis.net/def/crs/EPSG/0/4674
-    providers:
-      - type: feature
-        name: OGR
-        data:
-          source_type: SQLite
-          source: /app/bdgeo26.db
-        layer: desmatamento
-        crs:
-          - http://www.opengis.net/def/crs/OGC/1.3/CRS84
-          - http://www.opengis.net/def/crs/EPSG/0/4674
-        id_field: fid
-        storage_crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
-        properties:
-          - state
-          - path_row
-          - main_class
-          - class_name
-          - def_cloud
-          - julian_day
-          - image_date
-          - year
-          - area_km
-          - scene_id
-          - source
-          - satellite
-          - sensor
-          - uuid
-  # ----------------------------------------------------------------------------
-  # Processo: Algoritmo/Função OGC API - Processes
-  # ----------------------------------------------------------------------------
-  exemplo:
-    type: process   # Define que este recurso é um processo/algoritmo executável
-    processor:
-      name: processes.exemplo.ExemploProcessor # Pacote Python que contém a lógica do processo
