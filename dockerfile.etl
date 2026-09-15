@@ -3,11 +3,35 @@ FROM ghcr.io/osgeo/gdal@sha256:96ce8fc6f9359cdfea6bb2a489d824f8bebd0dee66ad6d044
 # Remove o repo Apache Arrow herdado da imagem base (GPG NO_PUBKEY quebra o apt-get update)
 RUN rm -f /etc/apt/sources.list.d/apache-arrow.sources
 
-# Dependências mínimas do ETL: baixar via WFS (curl), ler JSON (jq) e carregar no Postgres (ogr2ogr/psql)
+# Instala dependências básicas + Tesseract
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         curl \
+        unzip \
         jq \
         less \
+        git \
         postgresql-client \
+        python3-pip \
+        python3-venv \
+        build-essential \
+        tesseract-ocr \
+        libtesseract-dev \
     && rm -rf /var/lib/apt/lists/*
+
+# Venv isolada para as dependências Python do pacote SICAR (evita PEP 668 sem afetar o GDAL do sistema)
+ENV VIRTUAL_ENV=/opt/venv
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+RUN python3 -m venv "$VIRTUAL_ENV" && \
+    "$VIRTUAL_ENV/bin/pip" install --no-cache-dir --upgrade pip setuptools wheel && \
+    "$VIRTUAL_ENV/bin/pip" install --no-cache-dir \
+        "SICAR @ git+https://github.com/urbanogilson/SICAR.git@v0.8.0" \
+        httpx>=0.28.1 \
+        urllib3>=2.3.0 \
+        pytesseract>=0.3.13 \
+        opencv-python-headless>=4.11.0.86 \
+        numpy>=2.0.2 \
+        tqdm>=4.67.1 \
+        matplotlib>=3.10.0 \
+        beautifulsoup4>=4.13.4
